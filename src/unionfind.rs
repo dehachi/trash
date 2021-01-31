@@ -32,4 +32,16 @@ impl UnionFind {
         let p = self.root(x);
         return -self.par[p] as usize;
     }
+    fn status(&mut self, begin: usize, end: usize) -> Vec<usize> {
+        let mut sta = Vec::new();
+        for i in begin..end {
+            sta.push(self.root(i));
+        }
+        return sta;
+    }
+    fn islands(&mut self, begin: usize, end: usize) -> usize {
+        let sta = self.status(begin, end);
+        let set = sta.iter().cloned().collect::<std::collections::HashSet<usize>>();
+        return set.len();
+    }
 }
