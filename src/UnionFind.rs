@@ -1,11 +1,11 @@
 struct UnionFind {
     par: Vec<isize>,
-    length: usize
+    n: usize
 }
 
 impl UnionFind {
-    fn init(n: usize) -> UnionFind {
-        return UnionFind{par: vec![-1; n], length: n};
+    fn init(length: usize) -> UnionFind {
+        return UnionFind{par: vec![-1; length], n: length};
     }
     fn root(&mut self, x: usize) -> usize{
         if self.par[x] < 0 {
@@ -35,7 +35,7 @@ impl UnionFind {
     }
     fn status(&mut self) -> Vec<usize> {
         let mut sta = Vec::new();
-        for i in 0..self.length {
+        for i in 0..self.n {
             sta.push(self.root(i));
         }
         return sta;
