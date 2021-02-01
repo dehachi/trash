@@ -1,4 +1,4 @@
-fn rle<T:Eq + Copy>(v: Vec<T>) -> Vec<(T, usize)>{
+fn RLE<T:Eq + Copy>(v: Vec<T>) -> Vec<(T, usize)>{
     let mut ret: Vec<(T, usize)> = vec![];
     let (n, mut l) = (v.len(), 0);
     while l < n {
