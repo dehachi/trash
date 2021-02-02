@@ -1,48 +1,44 @@
-struct UnionFind {
-    par: Vec<isize>,
-    n: usize
+struct Dijkstra {
+    graph: Vec<Vec<(usize, usize)>>,
+    n: usize,
+    dist: Vec<usize>,
+    prev: Vec<isize>
 }
 
-impl UnionFind {
-    fn init(length: usize) -> UnionFind {
-        return UnionFind{par: vec![-1; length], n: length};
+impl Dijkstra {
+    fn init(length: usize, g: Vec<Vec<(usize, usize)>>) -> Dijkstra {
+        let d = vec![std::u32::MAX as usize; length];
+        let p = vec![-1; length];
+        return Dijkstra{graph: g, n: length, dist: d, prev: p}
     }
-    fn root(&mut self, x: usize) -> usize{
-        if self.par[x] < 0 {
-            return x;
-        } else {
-            self.par[x] = self.root(self.par[x] as usize) as isize;
-            return self.par[x] as usize
+    fn calc(&mut self, s:usize) {
+        self.dist[s] = 0;
+        let mut heap = std::collections::BinaryHeap::new();
+        heap.push((0, s));
+        while !heap.is_empty() {
+            let (d, pos) = heap.pop().unwrap();
+            if d > self.dist[pos] {continue;}
+            for (to, cost) in self.graph[pos].iter() {
+                let next = self.dist[pos] + cost;
+                if next < self.dist[*to] {
+                    self.dist[*to] = next;
+                    self.prev[*to] = pos as isize;
+                    heap.push((next, *to));
+                }
+            }
         }
     }
-    fn same(&mut self, x: usize, y: usize) -> bool {
-        return self.root(x) == self.root(y);
+    fn distance(&mut self, v: usize) -> usize{
+        return self.dist[v];
     }
-    fn merge(&mut self, x: usize, y: usize) -> bool{
-        let mut rx = self.root(x);
-        let mut ry = self.root(y);
-        if rx == ry {return false;};
-        if self.par[rx] > self.par[ry] {
-            std::mem::swap(&mut rx, &mut ry);
+    fn path(&mut self, v: usize) -> Vec<usize> {
+        let mut p = vec![];
+        let mut i = v as isize;
+        while i != -1 {
+            p.push(i as usize);
+            i = self.prev[i as usize] as isize;
         }
-        self.par[rx] += self.par[ry];
-        self.par[ry] = rx as isize;
-        return true;
-    }
-    fn size(&mut self, x: usize) -> usize {
-        let p = self.root(x);
-        return -self.par[p] as usize;
-    }
-    fn status(&mut self) -> Vec<usize> {
-        let mut sta = Vec::new();
-        for i in 0..self.n {
-            sta.push(self.root(i));
-        }
-        return sta;
-    }
-    fn islands(&mut self) -> usize {
-        let sta = self.status();
-        let set = sta.iter().cloned().collect::<std::collections::HashSet<usize>>();
-        return set.len();
+        p.reverse();
+        return p;
     }
 }
