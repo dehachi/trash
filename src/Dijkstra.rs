@@ -11,6 +11,9 @@ impl Dijkstra {
         let p = vec![-1; length];
         return Dijkstra{graph: g, n: length, dist: d, prev: p}
     }
+    fn clean(&mut self) {
+        self.dist = vec![std::u32::MAX as usize; ];
+    }
     fn calc(&mut self, s:usize) {
         self.dist[s] = 0;
         let mut heap = std::collections::BinaryHeap::new();
