@@ -2,7 +2,7 @@ struct UnionFind {
     par: Vec<isize>,
     n: usize
 }
- 
+
 impl UnionFind {
     fn init(length: usize) -> UnionFind {
         return UnionFind{par: vec![-1; length], n: length};
