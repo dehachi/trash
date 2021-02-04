@@ -8,8 +8,7 @@ struct Dijkstra {
 impl Dijkstra {
     fn init(length: usize, g: Vec<Vec<(usize, usize)>>) -> Dijkstra {
         let d = vec![std::u32::MAX as usize; length];
-        let p = vec![-1; length];
-        return Dijkstra{graph: g, n: length, dist: d, prev: p}
+        return Dijkstra{graph: g, n: length, dist: d, prev: vec![-1; length]}
     }
     fn clean(&mut self) {
         self.dist = vec![std::u32::MAX as usize; ];
