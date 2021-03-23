@@ -1,0 +1,16 @@
+fn LCS_len(s: String, t: String) -> usize {
+    let svec = s.chars().collect::<Vec<char>>();
+    let tvec = t.chars().collect::<Vec<char>>();
+    let (slen, tlen) = (svec.len(), tvec.len());
+    let mut dp = vec![vec![0; tlen+1]; slen+1];
+    for i in 1..slen+1 {
+        for j in 1..tlen+1 {
+            if svec[i-1] == tvec[j-1] {
+                dp[i][j] = dp[i-1][j-1]+1;
+            } else {
+                dp[i][j] = dp[i-1][j].max(dp[i][j-1]);
+            }
+        }
+    }
+    return dp[slen][tlen];
+}
