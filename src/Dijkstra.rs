@@ -1,6 +1,6 @@
 mod Dijkstra {
-    pub fn distance(n: usize, graph: &Vec<Vec<(usize, isize)>>, s: usize, mode: u8) -> Vec<isize> {
-        let mut dist = vec![std::u32::MAX as isize; n];
+    fn distance(n: usize, graph: &Vec<Vec<(usize, isize)>>, s: usize, mode: u8) -> Vec<isize> {
+        let mut dist = vec![std::usize::MAX as isize; n];
         let mut prev = vec![-1; n];
         dist[s] = 0;
         let mut heap = std::collections::BinaryHeap::new();
@@ -23,7 +23,7 @@ mod Dijkstra {
             return prev;
         }
     }
-    pub fn path(v: usize, prev: Vec<isize>) -> Vec<usize> {
+    fn path(v: usize, prev: Vec<isize>) -> Vec<usize> {
         let mut p = vec![];
         let mut i = v as isize;
         while i != -1 {
