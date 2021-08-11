@@ -10,6 +10,7 @@ verified: https://judge.yosupo.jp/submission/55950
 
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
 struct LowestCommonAncester {
     vector<int> dep;
@@ -60,24 +61,20 @@ struct LowestCommonAncester {
 };
 
 int main() {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
     vector<vector<int>> g(n);
-    for (int i=0; i<n-1; i++) {
-        int x, y;
-        cin >> x >> y;
-        x--, y--;
-        g[x].push_back(y);
-        g[y].push_back(x);
+    for (int i=1; i<n; i++) {
+        int p;
+        cin >> p;
+        g[i].push_back(p);
+        g[p].push_back(i);
     }
     LowestCommonAncester lca(g);
-    int q;
-    cin >> q;
     while (q--) {
-        int a, b;
-        cin >> a >> b;
-        a--, b--;
-        cout << lca.distance(a, b)+1 << "\n";
+        int u, v;
+        cin >> u >> v;
+        cout << lca.ancestor(u, v) << "\n";
     }
     return 0;
 }
