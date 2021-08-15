@@ -5,7 +5,7 @@ Union-Find木
 頂点xと頂点yの木を結合: merge(頂点x, 頂点y)
 頂点xと頂点yが同じ木に属するか: same(頂点x, 頂点y)
 頂点xの属する木の頂点数: size(頂点x)
-森に生えてる木の本数: forset_size(頂点x)
+森に生えてる木の本数: forest_size(頂点x)
 
 verified: https://judge.yosupo.jp/submission/56611
 */
