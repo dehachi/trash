@@ -1,4 +1,4 @@
-vector<ll> divisors(ll N) {
+vector<ll> divisor_enumerate(ll N) {
     vector<ll> res;
     for (ll i=1; i*i<=N; i++) {
         if (N % i == 0) {
