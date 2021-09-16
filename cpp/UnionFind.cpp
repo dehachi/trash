@@ -20,6 +20,7 @@ struct UnionFind {
     UnionFind(int n) {init(n);}
     void init(int n) {
         par.assign(n, -1);
+        flen = n;
     }
     int root(int x) {
         if (par[x] < 0) return x;
