@@ -1,7 +1,8 @@
 ll ncr(ll n, ll r) {
-	r = min(r, n-r);
-	ll x = n, y = r;
-	for (ll i=n-r+1; i<n; i++) x *= i;
-	for (ll i=2; i<r; i++) y *= i;
-	return x / y;
+	ll res = 1;
+	for (ll i=1; i<=n; i++) {
+		res *= r+i;
+		res /= i;
+	}
+	return res;
 }
