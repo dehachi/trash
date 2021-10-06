@@ -11,7 +11,7 @@ struct SegmentTree {
 	void set(int i, int x) {
 		node[i+=n] = x;
 		while (i) {
-		    i /= 2;
+			i /= 2;
 			node[i] = min(node[i*2], node[i*2+1]);
 		}
 	}
