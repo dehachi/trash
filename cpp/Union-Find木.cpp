@@ -13,6 +13,7 @@ verified: https://judge.yosupo.jp/submission/56611
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+
 struct UnionFind {
 	int flen;
 	vector<int> par;
