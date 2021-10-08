@@ -3,7 +3,7 @@
 宣言: Doubling hogehoge(要素数, logk, 全要素の次に到達する要素)
 
 構築(自動): build(要素数, logk, 全要素の次に到達する要素)
-sからk回移動した要素: calc(始点, k)
+sからk回移動した要素: calc(s, k)
 */
 
 template <class T>
