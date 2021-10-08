@@ -1,6 +1,9 @@
 /*
 Union-Find木
-初期化（自動): init(頂点数)
+
+宣言: UnionFind hogehoge(頂点数)
+
+構築(自動): build(頂点数)
 頂点xの根を求める: root(頂点x)
 頂点xと頂点yの木を結合: merge(頂点x, 頂点y)
 頂点xと頂点yが同じ木に属するか: same(頂点x, 頂点y)
@@ -17,8 +20,8 @@ typedef long long ll;
 struct UnionFind {
 	int flen;
 	vector<int> par;
-	UnionFind(int n) {init(n);}
-	void init(int n) {
+	UnionFind(int n) {build(n);}
+	void build(int n) {
 		par.assign(n, -1);
 		flen = n;
 	}
