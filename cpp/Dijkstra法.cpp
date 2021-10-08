@@ -4,10 +4,8 @@ Dijkstra法
 頂点sからの単一始点最短経路: dijkstra(頂点s, 隣接リスト{頂点, コスト})
 */
 
-#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 #define ll long long
-#define ALL(V) V.begin(), V.end()
 using namespace std;
 
 template <class T>
