@@ -4,6 +4,10 @@
 nの素数判定: is_prime(n)
 */
 
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
 template <class T>
 bool is_prime(T N) {
     if (N == 1) return false;
