@@ -1,5 +1,6 @@
 /*
 Dijkstra法
+
 頂点sからの単一始点最短経路: dijkstra(頂点s, 隣接リスト{頂点, コスト})
 verified: https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=5801897#1
 */
@@ -30,23 +31,4 @@ vector<T> dijkstra(int s, vector<vector<pair<int, T>>>& g) {
 		}
 	}
 	return dis;
-}
-
-int main() {
-	cin.tie(0);
-	ios::sync_with_stdio(0);
-	int v, e, r;
-	cin >> v >> e >> r;
-	vector<vector<pair<int,int>>> g(v);
-	while (e--) {
-		int s, t, d;
-		cin >> s >> t >> d;
-		g[s].push_back({t, d});
-	}
-	for (int i: dijkstra(r, g)) {
-		if (i == INT32_MAX) cout << "INF";
-		else cout << i;
-		cout << "\n";
-	}
-	return 0;
 }
