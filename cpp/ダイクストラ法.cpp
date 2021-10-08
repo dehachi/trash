@@ -19,8 +19,7 @@ vector<int> dijkstra(int s, vector<vector<pair<int, int>>>& g) {
 		heap.pop();
 		if (v < dis[pos]) continue;
 		for (P e: g[pos]) {
-			int to, cost;
-			tie(to, cost) = e;
+			auto[to, cost] = e;
 			if (dis[to] > dis[pos] + cost) {
 				dis[to] = dis[pos] + cost;
 				heap.push({dis[to], to});
