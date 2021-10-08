@@ -4,6 +4,10 @@
 nの素因数を昇順に列挙: prime_enumerate(n)
 */
 
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
 template <class T>
 vector<T> prime_enumerate(T N) {
     vector<T> res;
