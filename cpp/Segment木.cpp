@@ -4,12 +4,11 @@
 
 遅延のもつくる
 */
-
 template <typename T>
 struct SegmentTree {
 	int n;
 	vector<T> node;
-	using F = function<T(T,T)>;
+	typedef function<T(T,T)> F;
 	F f;
 	T e;
 	SegmentTree(int n, F f, T e) 
