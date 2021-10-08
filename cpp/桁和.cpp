@@ -4,6 +4,10 @@
 nの各桁の値の総和
 */
 
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
 template <class T>
 T ketawa(T N) {
     T res = 0;
