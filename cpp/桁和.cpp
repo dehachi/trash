@@ -1,3 +1,9 @@
+/*
+桁和
+
+nの各桁の値の総和
+*/
+
 template <class T>
 T ketawa(T N) {
     T res = 0;
