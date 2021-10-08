@@ -8,28 +8,28 @@ verified: https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=5801897#1
 using namespace std;
 typedef long long ll;
 
-vector<int> Dijkstra(int s, vector<vector<pair<int, int>>>& g) {
-    vector<int> dis(g.size(), INT32_MAX);
-    dis[s] = 0;
-    typedef pair<int,int> P;
-    priority_queue<P, vector<P>, greater<P>> heap;
-    heap.push({0, s});
-    while (!heap.empty()) {
-        int pos, v;
-        tie(v, pos) = heap.top();
-        heap.pop();
-        if (v < dis[pos]) continue;
-        for (P e: g[pos]) {
-            int to, cost;
-            tie(to, cost) = e;
-            if (dis[to] > dis[pos] + cost) {
-                dis[to] = dis[pos] + cost;
-                heap.push({dis[to], to});
-            }
-        }
-    }
-    return dis;
+vector<int> dijkstra(int s, vector<vector<pair<int, int>>>& g) {
+	vector<int> dis(g.size(), INT32_MAX);
+	dis[s] = 0;
+	typedef pair<int,int> P;
+	priority_queue<P, vector<P>, greater<P>> heap;
+	heap.push({0, s});
+	while (!heap.empty()) {
+		auto[v, pos] = heap.top();
+		heap.pop();
+		if (v < dis[pos]) continue;
+		for (P e: g[pos]) {
+			int to, cost;
+			tie(to, cost) = e;
+			if (dis[to] > dis[pos] + cost) {
+				dis[to] = dis[pos] + cost;
+				heap.push({dis[to], to});
+			}
+		}
+	}
+	return dis;
 }
+
 
 int main() {
     int v, e, r;
