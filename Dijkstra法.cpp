@@ -1,6 +1,6 @@
 /*
-ダイクストラ法
-頂点sからの単一始点最短経路: Dijkstra(頂点s, 隣接リスト{頂点, コスト})
+Dijkstra法
+頂点sからの単一始点最短経路: dijkstra(頂点s, 隣接リスト{頂点, コスト})
 verified: https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=5801897#1
 */
 
