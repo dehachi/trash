@@ -49,16 +49,3 @@ struct UnionFind {
 		return flen;
 	}
 };
-
-int main() {
-    int n, q;
-    cin >> n >> q;
-    UnionFind uf(n);
-    while (q--) {
-        int p, a, b;
-        cin >> p >> a >> b;
-        if (p == 0) uf.merge(a, b);
-        else cout << uf.same(a, b) << "\n";
-    }
-    return 0;
-}
