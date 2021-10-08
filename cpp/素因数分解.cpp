@@ -4,6 +4,10 @@
 nを(素因数, 指数) の形で素因数分解(素因数は昇順): prime_factorize(n)
 */
 
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
 template <class T>
 vector<pair<T,int>> prime_factorize(T N) {
     vector<pair<ll,int>> res;
