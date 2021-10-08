@@ -1,6 +1,13 @@
-vector<pair<ll,int>> prime_factorize(ll N) {
+/*
+素因数分解
+
+nを(素因数, 指数) の形で素因数分解: prime_factorize(n)
+*/
+
+template <class T>
+vector<pair<T,int>> prime_factorize(T N) {
     vector<pair<ll,int>> res;
-    for (ll i=2; i+i<=N; i++) {
+    for (T i=2; i+i<=N; i++) {
         if (N % i != 0) continue;
         int j = 0;
         while (N % i == 0) {
