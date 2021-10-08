@@ -1,7 +1,7 @@
 /*
 素因数分解
 
-nを(素因数, 指数) の形で素因数分解: prime_factorize(n)
+nを(素因数, 指数) の形で素因数分解(素因数は昇順): prime_factorize(n)
 */
 
 template <class T>
