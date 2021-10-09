@@ -3,9 +3,9 @@
 
 宣言: SegmentTree(要素数, 二項演算子, 単位元)
 
-i番目の要素をxに変更し木を再構築: update(i, x)
+i番目の要素をxに変更し祖先を更新: update(i, x)
 i番目の要素をxに変更するだけ: set(i, x)
-木全体を構築: build()
+木全体を更新: build()
 区間[l, r)で二項演算した値: fold(l, r)
 */
 
