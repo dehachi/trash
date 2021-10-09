@@ -9,6 +9,10 @@ i番目の要素をxに変更するだけ: set(i, x)
 区間[l, r)で二項演算した値: fold(l, r)
 */
 
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
 template <typename T>
 struct SegmentTree {
 	int n;
