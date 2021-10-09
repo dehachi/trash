@@ -1,8 +1,14 @@
 /*
-やる：
+セグメント木
 
-遅延のもつくる
+宣言: SegmentTree(要素数, 二項演算子, 単位元)
+
+i番目の要素をxに変更し木を再構築: update(i, x)
+i番目の要素をxに変更するだけ: set(i, x)
+木全体を構築: build()
+区間[l, r)で二項演算した値: fold(l, r)
 */
+
 template <typename T>
 struct SegmentTree {
 	int n;
@@ -12,10 +18,18 @@ struct SegmentTree {
 	T e;
 	SegmentTree(int n, F f, T e) 
 		: n(n), node(n*2, e), f(f), e(e) {}
-	void set(int i, T x) {
+	void update(int i, T x) {
 		node[i+=n] = x;
 		while (i) {
 			i /= 2;
+			node[i] = f(node[i*2], node[i*2+1]);
+		}
+	}
+	void set(int i, T x) {
+		node[i+n] = x;
+	}
+	void build() {
+		for (int i=n-1; i>0; i--) {
 			node[i] = f(node[i*2], node[i*2+1]);
 		}
 	}
