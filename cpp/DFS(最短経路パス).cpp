@@ -1,3 +1,11 @@
+/*
+深さ優先探索による最短経路パス
+
+宣言 Dfs_ShortestPath hogehoge(始点, 隣接リスト)
+
+始点からvまでの最短経路パス: path(v)
+*/
+
 struct Dfs_ShortestPath {
 	int s, n;
 	vector<int> prev;
