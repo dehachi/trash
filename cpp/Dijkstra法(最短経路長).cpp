@@ -12,11 +12,10 @@ vector<T> dijkstra_shortest_distance(int s, vector<vector<pair<int, T>>>& g) {
 	priority_queue<P, vector<P>, greater<P>> heap;
 	heap.push({0, s});
 	while (!heap.empty()) {
-		auto[v, pos] = heap.top();
+		auto [v, pos] = heap.top();
 		heap.pop();
 		if (v < dis[pos]) continue;
-		for (P e: g[pos]) {
-			auto[to, cost] = e;
+		for (auto [to, cost]: g[pos]) {
 			if (dis[to] > dis[pos] + cost) {
 				dis[to] = dis[pos] + cost;
 				heap.push({dis[to], to});
