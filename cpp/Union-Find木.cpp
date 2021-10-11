@@ -11,10 +11,6 @@ Union-Find木
 森に生えてる木の本数: forest_size(頂点x)
 */
 
-#include <bits/stdc++.h>
-#define ll long long
-using namespace std;
-
 struct UnionFind {
 	int flen;
 	vector<int> par;
