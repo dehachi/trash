@@ -4,10 +4,6 @@ Dijkstra法
 頂点sからの単一始点最短経路: dijkstra(頂点s, 隣接リスト{頂点, コスト})
 */
 
-#include <bits/stdc++.h>
-#define ll long long
-using namespace std;
-
 template <class T>
 vector<T> dijkstra(int s, vector<vector<pair<int, T>>>& g) {
 	vector<T> dis(g.size(), INT32_MAX);
