@@ -7,10 +7,6 @@
 要素sからk回移動した要素: calc(s, k)
 */
 
-#include <bits/stdc++.h>
-#define ll long long
-using namespace std;
-
 template <class T>
 struct Doubling {
 	int n;
