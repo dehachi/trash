@@ -4,10 +4,6 @@ Kruskal法
 最小全域木の辺の重みの総和: kruskal(頂点数, 辺リスト)
 */
 
-#include <bits/stdc++.h>
-#define ll long long
-using namespace std;
-
 struct UnionFind {
 	int flen;
 	vector<int> par;
