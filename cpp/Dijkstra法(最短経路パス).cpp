@@ -21,10 +21,10 @@ struct Dijkstra_ShortestPath {
 		dis[s] = 0;
 		heap.push({0, s});
 		while (!heap.empty()) {
-			auto[v, pos] = heap.top();
+			auto [v, pos] = heap.top();
 			heap.pop();
 			if (v < dis[pos]) continue;
-			for (auto[to, cost]: g[pos]) {
+			for (auto [to, cost]: g[pos]) {
 				if (dis[to] > dis[pos]+cost) {
 					dis[to] = dis[pos]+cost;
 					prev[to] = pos;
