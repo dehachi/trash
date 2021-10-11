@@ -7,11 +7,11 @@
 */
 
 struct Dfs_ShortestPath {
-	int s, n;
+	int s;
 	vector<int> prev;
 	vector<vector<int>> g;
 	Dfs_ShortestPath(int s, vector<vector<int>>& g)
-		: s(s), g(g), n(g.size()), prev(n, -1) {build();}
+		: s(s), g(g), prev(g.size(), -1) {build();}
 	void build() {
 		auto f = [&](auto self, int pos, int par) -> void {
 			prev[pos] = par;
