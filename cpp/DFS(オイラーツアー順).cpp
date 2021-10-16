@@ -1,7 +1,7 @@
 /*
 深さ優先探索によるオイラーツアーの頂点経路
 
-根をsとしてオイラーツアー: euler_tour_path(s, 隣接リスト)
+sを根としてオイラーツアー: euler_tour_path(s, 隣接リスト)
 */
 
 vector<int> euler_tour_path(int s, vector<vector<int>>& g) {
