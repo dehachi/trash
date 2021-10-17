@@ -50,8 +50,6 @@ inoremap ' ''<LEFT>
 function! Check()
 	if getline('.')[col('.')-2]=='{'
 		return 1
-	elseif getline('.')[col('.')-2]==':'
-		return 1
 	else
 		return 0
 	endif
