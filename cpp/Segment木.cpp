@@ -11,34 +11,42 @@ i番目の要素をxに変更するだけ: set(i, x)
 
 template <typename T>
 struct SegmentTree {
-	int n;
+	int n, logk, k;
 	vector<T> node;
 	typedef function<T(T,T)> F;
 	F f;
 	T e;
 	SegmentTree(int n, F f, T e) 
-		: n(n), node(n*2, e), f(f), e(e) {}
+		: n(n), f(f), e(e) {
+			logk = 0;
+			while ((1<<logk)<n) logk++;
+			k = 1<<logk;
+			node = vector<T>(2*k, e);
+		}
+	T operator[](int i) {return node[i+k];}
 	void update(int i, T x) {
-		node[i+=n] = x;
-		while (i) {
-			i /= 2;
-			node[i] = f(node[i*2], node[i*2+1]);
+		node[i+=k] = x;
+		for (int j=1; j<=logk; j++) {
+			int p = i>>j;
+			node[p] = f(node[p*2], node[p*2+1]);
 		}
 	}
 	void set(int i, T x) {
-		node[i+n] = x;
+		node[i+k] = x;
 	}
 	void build() {
-		for (int i=n-1; i>0; i--) {
+		for (int i=k-1; i>0; i--) {
 			node[i] = f(node[i*2], node[i*2+1]);
 		}
 	}
 	T fold(int l, int r) {
-		T res = e;
-		for (l+=n, r+=n; l<r; l/=2, r/=2) {
-			if (l%2 == 1) res = f(res, node[l++]);
-			if (r%2 == 1) res = f(res, node[--r]);
+		T res_l = e, res_r = e;
+		l += k, r += k;
+		while (l<r) {
+			if (l%2 == 1) res_l = f(res_l, node[l++]);
+			if (r%2 == 1) res_r = f(node[--r], res_r);
+			l /= 2, r /= 2;
 		}
-		return res;
+		return f(res_l, res_r);
 	}
 };
