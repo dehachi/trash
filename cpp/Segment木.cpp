@@ -19,9 +19,9 @@ struct SegmentTree {
 	SegmentTree(int n, F f, T e) 
 		: n(n), f(f), e(e) {
 			logk = 0;
-			while ((1<<logk)<n) logk++;
-			k = 1<<logk;
-			node = vector<T>(2*k, e);
+			while ((logk*2)<n) logk++;
+			k = logk*2;
+			node = vector<T>(k*2, e);
 		}
 	T operator[](int i) {return node[i+k];}
 	void update(int i, T x) {
