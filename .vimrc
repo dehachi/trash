@@ -37,6 +37,7 @@ set tabstop=4
 set shiftwidth=4
 "c言語に特化したオートインデント
 set smartindent
+set cindent
 "左右のカーソル移動で行を跨いで移動
 set whichwrap=b,s,h,l,<,>,[,],~
 "背景色
