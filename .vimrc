@@ -41,9 +41,6 @@ set smartindent
 set whichwrap=b,s,h,l,<,>,[,],~
 "背景色
 autocmd ColorScheme * highlight Normal ctermbg=16
-"補完色
-autocmd ColorScheme * highlight Pmenu ctermbg=237 ctermfg=255
-autocmd ColorScheme * highlight PmenuSel ctermbg=1, ctermfg=255
 "カラースキームの設定
 colorscheme default
 "テキストを折り返さない
