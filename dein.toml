@@ -2,7 +2,4 @@
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
-repo = 'bfrg/vim-cpp-modern'
-
-[[plugins]]
-repo = 'ourigen/skyline.vim'
+repo = 'octol/vim-cpp-enhanced-highlight'
