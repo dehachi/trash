@@ -71,3 +71,5 @@ set noswapfile
 "ステータスライン
 set statusline=%f%r%h%w%m%=%{&fileformat}\ %{&fileencoding}\ [%l,%c]
 set laststatus=2
+"マウス
+set mouse=a
