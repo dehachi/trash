@@ -4,6 +4,7 @@
 昇順ソートして重複削除した配列を返す。座標復元に使う
 */
 
+template <class T>
 vector<T> compress(vector<T> &v) {
 	vector<T> vals = v;
 	sort(vals.begin(), vals.end());
