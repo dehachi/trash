@@ -39,11 +39,6 @@ set shiftwidth=4
 set cindent
 "左右のカーソル移動で行を跨いで移動
 set whichwrap=b,s,h,l,<,>,[,],~
-"背景色
-autocmd ColorScheme * highlight Normal ctermbg=16
-"補完色
-autocmd ColorScheme * highlight Pmenu ctermbg=237 ctermfg=255
-autocmd ColorScheme * highlight PmenuSel ctermbg=1, ctermfg=255
 "カラースキームの設定
 colorscheme default
 "テキストを折り返さない
@@ -64,6 +59,11 @@ autocmd InsertEnter,InsertLeave * set cursorline!
 highlight CursorLine term=none cterm=none ctermfg=none ctermbg=0
 autocmd InsertEnter,InsertLeave * set cursorline!
 set cursorline
+"カーソル列をハイライト
+autocmd InsertEnter,InsertLeave * set cursorcolumn!
+highlight CursorColumn term=none cterm=none ctermfg=none ctermbg=0
+autocmd InsertEnter,InsertLeave * set cursorcolumn!
+set cursorcolumn
 "クリップボードと連携
 set clipboard+=unnamed
 "swapファイルを無効にする
@@ -71,5 +71,14 @@ set noswapfile
 "ステータスライン
 set statusline=%f%r%h%w%m%=%{&fileformat}\ %{&fileencoding}\ [%l,%c]
 set laststatus=2
-"マウス
-set mouse=a
+"インデント可視化
+set list
+set listchars=tab:\|\ 
+"検索ワードをハイライト
+set hlsearch
+nnoremap <ESC><ESC> :noh<CR>
+"カーソルの形
+if has('vim_starting')
+    let &t_SI .= "\e[6 q"
+    let &t_EI .= "\e[2 q"
+endif
