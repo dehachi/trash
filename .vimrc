@@ -82,3 +82,11 @@ if has('vim_starting')
     let &t_SI .= "\e[6 q"
     let &t_EI .= "\e[2 q"
 endif
+"ターミナル
+set splitbelow
+inoremap <C-w> <ESC><C-w>
+inoremap <C-t> <ESC>:term<CR>
+nnoremap <C-t> :terminal<CR>
+tnoremap <C-t> <C-w>:quit!<CR>
+tnoremap <C-k> <C-\><C-n><C-w>+i
+tnoremap <C-j> <C-\><C-n><C-w>-i
