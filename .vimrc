@@ -27,6 +27,15 @@ if len(s:removed_plugins) > 0
 	call dein#recache_runtimepath()
 endif
 
+
+"グローバル変数はここにまとめておく
+let cptarget='filename' "コンパイルするファイル名
+let cperrorid=0 "コンパイルエラーを表示するウインドウID
+let cpresult=0 "コンパイルが成功したか(0:失敗, 1:成功)
+let cperror_display=0 "コンパイルエラーが表示されているか(0:されてない, 1:されてる)
+let mainid=0 "メインスペースのウインドウID
+let greeting_phrase='hello' "hello
+
 "行番号の表示
 set nu
 augroup numbertoggle
@@ -96,8 +105,7 @@ tnoremap <C-t> <C-w>:quit!<CR>
 tnoremap <C-k> <C-\><C-n><C-w>+i
 tnoremap <C-j> <C-\><C-n><C-w>-i
 
-"?
-let greeting_phrase='hello'
+"起動時挨拶
 function! Greeting()
 	let h = strftime("%H")
 	if l:h<14400
@@ -112,17 +120,23 @@ function! Greeting()
 	execute "normal :echo g:greeting_phrase.', Master.'\<CR>"
 endfunction
 
-autocmd VimEnter * call Greeting()
+"vim起動時にすること
+function! Init_vim()
+	let g:mainid = win_getid()
+	execute "normal :call Greeting()\<CR>"
+endfunction
 
-"ファイルが空か判定する関数
+autocmd VimEnter * call Init_vim()
+
+"メインスペースに移動
+function! Go_mainspace()
+	silent execute "normal :call win_gotoid(g:mainid)\<CR>"
+endfunction
+
+"ファイルが空か判定する
 function! Is_empty()
 	return wordcount().bytes==0
 endfunction
-
-let cptarget='filename' "コンパイルするファイル名
-let cperrorid=0 "コンパイルエラーを表示するウインドウID
-let cpresult=0 "コンパイルが成功したか(0:失敗, 1:成功)
-let cperror_display=0 "コンパイルエラーが表示されているか(0:されてない, 1:されてる)
 
 "g:cptargetの設定
 function! Set_cptarget()
@@ -168,6 +182,7 @@ function! Compile_result_message()
 			execute "normal :echo g:cptarget.' failed to compile.'\<CR>"
 		endif
 	endif
+	silent execute "normal :call Go_mainspace()\<CR>"
 endfunction
 
 "コンパイルエラー表示を消す
@@ -175,15 +190,15 @@ function! Close_cperror()
 	silent execute "normal :call win_gotoid(g:cperrorid)\<CR>"
 	silent execute "normal :q!\<CR>"
 	let g:cperror_display=0
+	silent execute "normal :call Go_mainspace()\<CR>"
 endfunction
 
 "F5押したときの分岐
 function! F5_junction_cpp()
-	if g:cperror_display==0
-		execute "normal :call Compile_cpp()\<CR>"
-	else
+	if g:cperror_display==1
 		silent execute "normal :call Close_cperror()\<CR>"
 	endif
+	execute "normal :call Compile_cpp()\<CR>"
 endfunction
 
 nnoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t") 'was clipped'<CR>
