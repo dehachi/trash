@@ -28,8 +28,12 @@ if len(s:removed_plugins) > 0
 endif
 
 "行番号の表示
-set number
-"インデント
+set nu
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set rnu
+    autocmd BufLeave,FocusLost,InsertEnter * set nornu
+augroup END
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,def,class,try,except
 autocmd FileType cpp setl cindent
@@ -91,3 +95,97 @@ nnoremap <C-t> :terminal<CR>
 tnoremap <C-t> <C-w>:quit!<CR>
 tnoremap <C-k> <C-\><C-n><C-w>+i
 tnoremap <C-j> <C-\><C-n><C-w>-i
+
+"?
+let greeting_phrase='hello'
+function! Greeting()
+	let h = strftime("%H")
+	if l:h<14400
+		let g:greeting_phrase='Good evening'
+	elseif l:h<36000
+		let g:greeting_phrase='Good Morning'
+	elseif l:h<64800
+		let g:greeting_phrase='Good afternoon'
+	else
+		let g:greeting_phrase='Good evening'
+	endif
+	execute "normal :echo g:greeting_phrase.', Master.'\<CR>"
+endfunction
+
+autocmd VimEnter * call Greeting()
+
+"ファイルが空か判定する関数
+function! Is_empty()
+	return wordcount().bytes==0
+endfunction
+
+let cptarget='filename' "コンパイルするファイル名
+let cperrorid=0 "コンパイルエラーを表示するウインドウID
+let cpresult=0 "コンパイルが成功したか(0:失敗, 1:成功)
+let cperror_display=0 "コンパイルエラーが表示されているか(0:されてない, 1:されてる)
+
+"g:cptargetの設定
+function! Set_cptarget()
+	let g:cptarget=expand("%:t")
+endfunction
+
+"g:cperroridの設定
+function! Set_cperrorid()
+	let g:cperrorid=win_getid() 
+endfunction
+
+"コンパイル結果の記録
+function! CompileError_Check()
+	if Is_empty()
+		let g:cpresult=1
+		silent execute "normal :q!\<CR>"
+		let g:cperror_display=0
+	else
+		let g:cpresult=0
+	endif
+endfunction
+
+"g++を走らせる
+function! Compile_cpp()
+	execute "normal :echo 'Trying to compile '.g:cptarget\<CR>"
+	silent execute "normal :sp CompileError\<CR>"
+	let g:cperror_display=1
+	silent execute "normal :call Set_cperrorid()\<CR>"
+	silent execute "normal gg\<S-v>Gd"
+	silent execute "normal \<S-v>:!g++ -std=gnu++17 -o a -I . a.cpp\<CR>"
+	execute "normal \<ESC>:call CompileError_Check()\<CR>"
+endfunction
+
+"コンパイル結果の報告
+function! Compile_result_message()
+	execute "normal :echo ''\<CR>"
+	if g:cperror_display==0
+		if g:cpresult==1
+			execute "normal :echo g:cptarget.' was compiled successfully.'\<CR>"
+		endif
+	else
+		if g:cpresult==0
+			execute "normal :echo g:cptarget.' failed to compile.'\<CR>"
+		endif
+	endif
+endfunction
+
+"コンパイルエラー表示を消す
+function! Close_cperror()
+	silent execute "normal :call win_gotoid(g:cperrorid)\<CR>"
+	silent execute "normal :q!\<CR>"
+	let g:cperror_display=0
+endfunction
+
+"F5押したときの分岐
+function! F5_junction_cpp()
+	if g:cperror_display==0
+		execute "normal :call Compile_cpp()\<CR>"
+	else
+		silent execute "normal :call Close_cperror()\<CR>"
+	endif
+endfunction
+
+nnoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t") 'was clipped'<CR>
+inoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t") 'was clipped'<CR>
+autocmd filetype cpp nnoremap <F5> :w<CR>:call Set_cptarget()<CR>:call F5_junction_cpp()<CR>:call Compile_result_message()<CR>
