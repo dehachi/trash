@@ -108,11 +108,11 @@ tnoremap <C-j> <C-\><C-n><C-w>-i
 "起動時挨拶
 function! Greeting()
 	let h = strftime("%H")
-	if l:h<14400
+	if l:h<4
 		let g:greeting_phrase='Good evening'
-	elseif l:h<36000
+	elseif l:h<12
 		let g:greeting_phrase='Good Morning'
-	elseif l:h<64800
+	elseif l:h<6
 		let g:greeting_phrase='Good afternoon'
 	else
 		let g:greeting_phrase='Good evening'
@@ -201,6 +201,6 @@ function! F5_junction_cpp()
 	execute "normal :call Compile_cpp()\<CR>"
 endfunction
 
-nnoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t") 'was clipped'<CR>
-inoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t") 'was clipped'<CR>
+nnoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t").' was clipped.'<CR>
+inoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t").' was clipped.'<CR>
 autocmd filetype cpp nnoremap <F5> :w<CR>:call Set_cptarget()<CR>:call F5_junction_cpp()<CR>:call Compile_result_message()<CR>
