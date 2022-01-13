@@ -4,7 +4,7 @@ from math import *
 from heapq import *
 from bisect import *
 
-def main()
+def main():
 	return 0
 
 if __name__ == "__main__":
