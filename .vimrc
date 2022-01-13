@@ -71,8 +71,12 @@ if has('persistent_undo')
 endif
 let g:netrw_use_errorwindow=0
 let g:netrw_banner=0
+let g:netrw_preview=1
+let g:netrw_liststyle=0
+let g:netrw_keepdir=0
 set splitbelow
 set splitright
+
 let g:mainid=0
 let g:termid=0
 let g:term_disp=0
@@ -166,6 +170,12 @@ endfunction
 autocmd VimEnter * call Vim_Init()
 autocmd WinEnter * call WinEnter_Setting()
 
+inoremap ( ()<Left>
+inoremap { {}<Left>
+inoremap {<CR> {<CR>}<Esc>O
+inoremap [ []<Left>
+inoremap " ""<Left>
+inoremap ' ''<Left>
 nnoremap <C-b> :call Menu_Select()<CR>
 nnoremap <C-t> :call Term_Select()<CR>
 tnoremap <C-t> <C-w>:call Term_Select()<CR>
