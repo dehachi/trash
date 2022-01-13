@@ -168,7 +168,6 @@ autocmd WinEnter * call WinEnter_Setting()
 
 nnoremap <C-b> :call Menu_Select()<CR>
 nnoremap <C-t> :call Term_Select()<CR>
-inoremap <C-t> <ESC>:call Term_Select()<CR>
 tnoremap <C-t> <C-w>:call Term_Select()<CR>
 nnoremap <C-Up> <ESC>:call Term_Row_Up()<CR>
 nnoremap <C-Down> :call Term_Row_Down()<CR>
