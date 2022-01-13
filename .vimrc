@@ -1,4 +1,3 @@
-"dein.vim
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if &runtimepath !~# '/dein.vim'
@@ -26,181 +25,152 @@ if len(s:removed_plugins) > 0
 	call map(s:removed_plugins, "delete(v:val, 'rf')")
 	call dein#recache_runtimepath()
 endif
-
-
-"グローバル変数はここにまとめておく
-let cptarget='filename' "コンパイルするファイル名
-let cperrorid=0 "コンパイルエラーを表示するウインドウID
-let cpresult=0 "コンパイルが成功したか(0:失敗, 1:成功)
-let cperror_display=0 "コンパイルエラーが表示されているか(0:されてない, 1:されてる)
-let mainid=0 "メインスペースのウインドウID
-let greeting_phrase='hello' "hello
-
-"行番号の表示
-set nu
-augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set rnu
-    autocmd BufLeave,FocusLost,InsertEnter * set nornu
-augroup END
+set number
+filetype on
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,def,class,try,except
 autocmd FileType cpp setl cindent
-"左右のカーソル移動で行を跨いで移動
 set whichwrap=b,s,h,l,<,>,[,],~
-"カラースキームの設定"シンタックスハイライトを有効にする
 syntax on
-"tabを4文字分にする
 set tabstop=4
-"インデントを4文字分にする
 set shiftwidth=4
 colorscheme default
-"テキストを折り返さない
 set nowrap
-"文字コードの設定
 set encoding=utf-8
-"バックアップファイルを作成しない
 set nobackup
-"画面端でのスクロールに余裕をもつ
 set scrolloff=255
-"カーソル位置を記憶
 augroup vimrcEx
 	au BufRead * if line("'\"") > 0 && line("'\"") <= line("$") |
 	\ exe "normal g'\"" | endif
 augroup END
-"カーソル行をハイライト
 autocmd InsertEnter,InsertLeave * set cursorline!
 highlight CursorLine term=none cterm=none ctermfg=none ctermbg=0
 autocmd InsertEnter,InsertLeave * set cursorline!
 set cursorline
-"カーソル列をハイライト
 autocmd InsertEnter,InsertLeave * set cursorcolumn!
 highlight CursorColumn term=none cterm=none ctermfg=none ctermbg=0
 autocmd InsertEnter,InsertLeave * set cursorcolumn!
 set cursorcolumn
-"クリップボードと連携
 set clipboard+=unnamed
-"swapファイルを無効にする
 set noswapfile
-"ステータスライン
 set statusline=%f%r%h%w%m%=%{&fileformat}\ %{&fileencoding}\ [%l,%c]
 set laststatus=2
-"インデント可視化
 set list
 set listchars=tab:\|\ 
-"検索ワードをハイライト
+set wrapscan
 set hlsearch
+set incsearch
 nnoremap <ESC><ESC> :noh<CR>
-"カーソルの形
 if has('vim_starting')
 	let &t_SI.="\e[6 q"
 	let &t_EI.="\e[2 q"
 endif
-"ターミナル
+if has('persistent_undo')
+  set undodir=~/.vim/undo
+  set undofile                                                                                                                                   
+endif
+let g:netrw_use_errorwindow=0
+let g:netrw_banner=0
 set splitbelow
-inoremap <C-w> <ESC><C-w>
-inoremap <C-t> <ESC>:term<CR>
-nnoremap <C-t> :terminal<CR>
-tnoremap <C-t> <C-w>:quit!<CR>
-tnoremap <C-k> <C-\><C-n><C-w>+i
-tnoremap <C-j> <C-\><C-n><C-w>-i
+set splitright
+let g:mainid=0
+let g:termid=0
+let g:term_disp=0
+let g:filename=''
+let g:lastfile=''
 
-"起動時挨拶
-function! Greeting()
-	let h = strftime("%H")
-	if l:h<4
-		let g:greeting_phrase='Good evening'
-	elseif l:h<12
-		let g:greeting_phrase='Good Morning'
-	elseif l:h<6
-		let g:greeting_phrase='Good afternoon'
+function! Vim_Init()
+	let g:mainid=win_getid()
+	let g:filename=expand("%:t")
+endfunction
+
+function! Term_Open()
+	if g:term_disp==0
+		silent execute "normal :terminal\<CR>"
+		let g:term_disp=1
+		let g:termid=win_getid()
 	else
-		let g:greeting_phrase='Good evening'
+		silent execute "normal :call win_gotoid(g:termid)\<CR>"
 	endif
-	execute "normal :echo g:greeting_phrase.', Master.'\<CR>"
+	execute "normal :set laststatus=0\<CR>"
 endfunction
 
-"vim起動時にすること
-function! Init_vim()
-	let g:mainid = win_getid()
-	execute "normal :call Greeting()\<CR>"
-endfunction
-
-autocmd VimEnter * call Init_vim()
-
-"メインスペースに移動
-function! Go_mainspace()
-	silent execute "normal :call win_gotoid(g:mainid)\<CR>"
-endfunction
-
-"ファイルが空か判定する
-function! Is_empty()
-	return wordcount().bytes==0
-endfunction
-
-"g:cptargetの設定
-function! Set_cptarget()
-	let g:cptarget=expand("%:t")
-endfunction
-
-"g:cperroridの設定
-function! Set_cperrorid()
-	let g:cperrorid=win_getid() 
-endfunction
-
-"コンパイル結果の記録
-function! CompileError_Check()
-	if Is_empty()
-		let g:cpresult=1
-		silent execute "normal :q!\<CR>"
-		let g:cperror_display=0
-	else
-		let g:cpresult=0
+function! Term_Close()
+	if g:term_disp==1
+		silent execute "normal :call win_gotoid(g:termid)\<CR>"
+		silent execute "normal :q!\<CR>\<Left>"
+		let g:term_disp=0
 	endif
+	execute "normal :set laststatus=2\<CR>"
 endfunction
 
-"g++を走らせる
-function! Compile_cpp()
-	execute "normal :echo 'Trying to compile '.g:cptarget\<CR>"
-	silent execute "normal :sp CompileError\<CR>"
-	let g:cperror_display=1
-	silent execute "normal :call Set_cperrorid()\<CR>"
-	silent execute "normal gg\<S-v>Gd"
-	silent execute "normal \<S-v>:!g++ -std=gnu++17 -o a -I . a.cpp\<CR>"
-	execute "normal \<ESC>:call CompileError_Check()\<CR>"
+function! Term_Select()
+execute "normal :echo ''\<CR>"
+if g:term_disp==0
+silent execute "normal :call Term_Open()\<CR>"
+else
+silent execute "normal :call Term_Close()\<CR>"
+endif
 endfunction
 
-"コンパイル結果の報告
-function! Compile_result_message()
+function! Term_Row_Up()
 	execute "normal :echo ''\<CR>"
-	if g:cperror_display==0
-		if g:cpresult==1
-			execute "normal :echo g:cptarget.' was compiled successfully.'\<CR>"
-		endif
+	let l:posid=win_getid()
+	if g:term_disp==1
+		silent execute "normal :call win_gotoid(g:termid)\<CR>"
+		silent execute "normal \<C-w>+"
+	endif
+	silent execute "normal :call win_gotoid(l:posid)\<CR>"
+endfunction
+
+function! Term_Row_Down()
+	execute "normal :echo ''\<CR>"
+	let l:posid=win_getid()
+	if g:term_disp==1
+		silent execute "normal :call win_gotoid(g:termid)\<CR>"
+		silent execute "normal \<C-w>-"
+	endif
+	silent execute "normal :call win_gotoid(l:posid)\<CR>"
+endfunction
+
+function! Menu_Open()
+	let g:lastfile=expand("%:p")
+	execute "normal :echo ''\<CR>"
+	silent execute "normal :w\<CR>:e .\<CR>"
+endfunction
+
+function! Menu_Close()
+	execute "normal :echo ''\<CR>"
+	silent execute "normal :e ".g:lastfile."\<CR>"
+endfunction
+
+function! Menu_Select()
+	execute "normal :echo ''\<CR>"
+	if &filetype=='netrw'
+		silent execute "normal :call Menu_Close()\<CR>"
 	else
-		if g:cpresult==0
-			execute "normal :echo g:cptarget.' failed to compile.'\<CR>"
-		endif
+		silent execute "normal :call Menu_Open()\<CR>"
 	endif
-	silent execute "normal :call Go_mainspace()\<CR>"
 endfunction
 
-"コンパイルエラー表示を消す
-function! Close_cperror()
-	silent execute "normal :call win_gotoid(g:cperrorid)\<CR>"
-	silent execute "normal :q!\<CR>"
-	let g:cperror_display=0
-	silent execute "normal :call Go_mainspace()\<CR>"
-endfunction
-
-"F5押したときの分岐
-function! F5_junction_cpp()
-	if g:cperror_display==1
-		silent execute "normal :call Close_cperror()\<CR>"
+function! WinEnter_Setting()
+	if win_id2tabwin(g:mainid)==[0,0]
+		silent execute "normal :call win_gotoid(g:termid)\<CR>"
+		silent execute "normal :q!\<CR>"
+	elseif win_id2tabwin(g:termid)==[0,0]
+		let g:term_disp=0
+		silent execute "normal :set laststatus=2\<CR>"	
 	endif
-	execute "normal :call Compile_cpp()\<CR>"
 endfunction
 
-nnoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t").' was clipped.'<CR>
-inoremap <F4> <ESC> :w<CR> :!xclip -selection c % <CR><CR>hh:echo expand("%:t").' was clipped.'<CR>
-autocmd filetype cpp nnoremap <F5> :w<CR>:call Set_cptarget()<CR>:call F5_junction_cpp()<CR>:call Compile_result_message()<CR>
+autocmd VimEnter * call Vim_Init()
+autocmd WinEnter * call WinEnter_Setting()
+
+nnoremap <C-b> :call Menu_Select()<CR>
+nnoremap <C-t> :call Term_Select()<CR>
+inoremap <C-t> <ESC>:call Term_Select()<CR>
+tnoremap <C-t> <C-w>:call Term_Select()<CR>
+nnoremap <C-Up> <ESC>:call Term_Row_Up()<CR>
+nnoremap <C-Down> :call Term_Row_Down()<CR>
+tnoremap <C-Up> <C-w>:call Term_Row_Up()<CR>
+tnoremap <C-Down> <C-w>:call Term_Row_Down()<CR>
