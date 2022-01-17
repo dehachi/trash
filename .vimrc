@@ -1,13 +1,66 @@
+" dein.vim settings {{{
+" install dir {{{
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+" }}}
+
+" dein installation check {{{
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . s:dein_repo_dir
+endif
+" }}}
+
+" begin settings {{{
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+
+  " .toml file
+  let s:rc_dir = expand('~/.vim')
+  if !isdirectory(s:rc_dir)
+    call mkdir(s:rc_dir, 'p')
+  endif
+  let s:toml = s:rc_dir . '/dein.toml'
+
+  " read toml and cache
+  call dein#load_toml(s:toml, {'lazy': 0})
+
+  " end settings
+  call dein#end()
+  call dein#save_state()
+endif
+" }}}
+
+" plugin installation check {{{
+if dein#check_install()
+  call dein#install()
+endif
+" }}}
+
+" plugin remove check {{{
+let s:removed_plugins = dein#check_clean()
+if len(s:removed_plugins) > 0
+  call map(s:removed_plugins, "delete(v:val, 'rf')")
+  call dein#recache_runtimepath()
+endif
+" }}}
+
+set background=dark
+set t_Co=256
+let g:solarized_termcolors=256
+let g:solarized_termtrans = 1
+syntax on
+colorscheme railscasts
 set number
-filetype on
+syntax on
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,def,class,try,except
 autocmd FileType cpp setl cindent
 set whichwrap=b,s,h,l,<,>,[,],~
-syntax on
 set tabstop=4
 set shiftwidth=4
-colorscheme default
 set nowrap
 set encoding=utf-8
 set nobackup
@@ -28,11 +81,12 @@ set clipboard+=unnamed
 set noswapfile
 set statusline=%f%r%h%w%m%=%{&fileformat}\ %{&fileencoding}\ [%l,%c]
 set laststatus=2
-set list
-set listchars=tab:\|\ 
+""set list
+""set listchars=tab:\|\ 
 set wrapscan
 set hlsearch
 set incsearch
+set completeopt=menuone,noinsert
 nnoremap <ESC><ESC> :noh<CR>
 if has('vim_starting')
 	let &t_SI.="\e[6 q"
@@ -47,6 +101,7 @@ let g:netrw_banner=0
 let g:netrw_preview=1
 let g:netrw_liststyle=0
 let g:netrw_keepdir=0
+
 set splitbelow
 set splitright
 
@@ -55,11 +110,8 @@ let g:termid=0
 let g:term_disp=0
 let g:filename=''
 let g:lastfile=''
-
-function! Vim_Init()
-	let g:mainid=win_getid()
-	let g:filename=expand("%:t")
-endfunction
+let g:menu_disp=0
+let g:menuid=0
 
 function! Term_Open()
 	if g:term_disp==0
@@ -69,7 +121,6 @@ function! Term_Open()
 	else
 		silent execute "normal :call win_gotoid(g:termid)\<CR>"
 	endif
-	execute "normal :set laststatus=0\<CR>"
 endfunction
 
 function! Term_Close()
@@ -78,7 +129,6 @@ function! Term_Close()
 		silent execute "normal :q!\<CR>\<Left>"
 		let g:term_disp=0
 	endif
-	execute "normal :set laststatus=2\<CR>"
 endfunction
 
 function! Term_Select()
@@ -110,6 +160,7 @@ function! Term_Row_Down()
 	silent execute "normal :call win_gotoid(l:posid)\<CR>"
 endfunction
 
+
 function! Menu_Open()
 	let g:lastfile=expand("%:p")
 	execute "normal :echo ''\<CR>"
@@ -118,7 +169,7 @@ endfunction
 
 function! Menu_Close()
 	execute "normal :echo ''\<CR>"
-	silent execute "normal :e ".g:lastfile."\<CR>"
+	execute "normal :e ".g:lastfile."\<CR>"
 endfunction
 
 function! Menu_Select()
@@ -131,6 +182,7 @@ function! Menu_Select()
 endfunction
 
 function! WinEnter_Setting()
+	colorscheme railscasts
 	if win_id2tabwin(g:mainid)==[0,0]
 		silent execute "normal :call win_gotoid(g:termid)\<CR>"
 		silent execute "normal :q!\<CR>"
@@ -140,9 +192,19 @@ function! WinEnter_Setting()
 	endif
 endfunction
 
+function! Vim_Init()
+	let g:mainid=win_getid()
+	let g:filename=expand("%:t")
+	silent execute "normal :call Term_Open()\<CR>"
+	silent execute "normal 15\<C-w>_\<CR>"
+	silent execute "normal :call win_gotoid(g:mainid)\<CR>"
+endfunction
+
 autocmd VimEnter * call Vim_Init()
 autocmd WinEnter * call WinEnter_Setting()
 
+
+inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
 inoremap ( ()<Left>
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
