@@ -7,28 +7,27 @@ Dijkstra法による最短経路パス
 始点からの単一始点最短経路長: distance()
 */
 
-template <class T>
 struct Dijkstra_ShortestPath {
 	int s;
-	vector<T> dis;
+	vector<ll> dis;
 	vector<int> prev;
-	vector<vector<pair<int, T>>> g;
-	typedef pair<int,T> P;
-	priority_queue<P, vector<P>, greater<P>> heap;
-	Dijkstra_ShortestPath(int s, vector<vector<pair<int,T>>>& g)
-		: s(s), g(g), prev(g.size(), -1), dis(g.size(), numeric_limits<T>::max()) {build();}
+	vector<vector<pair<int, ll>>> g;
+	typedef pair<ll, int> P;
+	priority_queue<P, vector<P>, greater<P>> pq;
+	Dijkstra_ShortestPath(int s, vector<vector<pair<ll,int>>>& g)
+		: s(s), g(g), prev(g.size(), -1), dis(g.size(), LLONG_MAX) {build();}
 	void build() {
-		dis[s] = 0;
-		heap.push({0, s});
-		while (!heap.empty()) {
-			auto [v, pos] = heap.top();
-			heap.pop();
+		dis[s] = 0LL;
+		pq.push({0LL, s});
+		while (!pq.empty()) {
+			auto [v, pos] = pq.top();
+			pq.pop();
 			if (v < dis[pos]) continue;
 			for (auto [to, cost]: g[pos]) {
 				if (dis[to] > dis[pos]+cost) {
 					dis[to] = dis[pos]+cost;
 					prev[to] = pos;
-					heap.push({dis[to], to});
+					pq.push({dis[to], to});
 				}
 			}
 		}
@@ -43,7 +42,7 @@ struct Dijkstra_ShortestPath {
 		reverse(p.begin(), p.end());
 		return p;
 	}
-	vector<T> distance() {
+	vector<ll> distance() {
 		return dis;
 	}
 };
