@@ -14,7 +14,7 @@ struct Dijkstra_ShortestPath {
 	vector<vector<pair<int, ll>>> g;
 	typedef pair<ll, int> P;
 	priority_queue<P, vector<P>, greater<P>> pq;
-	Dijkstra_ShortestPath(int s, vector<vector<pair<ll,int>>>& g)
+	Dijkstra_ShortestPath(int s, vector<vector<pair<int,ll>>>& g)
 		: s(s), g(g), prev(g.size(), -1), dis(g.size(), LLONG_MAX) {build();}
 	void build() {
 		dis[s] = 0LL;
