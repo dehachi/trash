@@ -11,7 +11,7 @@ using namespace std;
 template <class T>
 vector<pair<T,int>> prime_factorize(T N) {
     vector<pair<ll,int>> res;
-    for (T i=2; i+i<=N; i++) {
+    for (T i=2; i*i<=N; i++) {
         if (N % i != 0) continue;
         int j = 0;
         while (N % i == 0) {
