@@ -30,11 +30,24 @@ inoremap [ []<Left>
 inoremap " ""<Left>
 inoremap ' ''<Left>
 colorscheme peachpuff
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 set whichwrap=b,s,h,l,<,>,[,],~
 if has('persistent_undo')
 	set undodir=~/.vim/undo
 	set undofile      
 endif
+let g:loaded_bracketed_paste=1
+let &t_ti.="\<Esc>[?2004h"
+let &t_te="\e[?2004l".&t_te
+function! XTermPasteBegin(ret)
+	set pastetoggle=<f29>
+	set paste
+	return a:ret
+endfunction
+execute "set <f28>=\<Esc>[200~"
+execute "set <f29>=\<Esc>[201~"
+map <expr> <f28> XTermPasteBegin("i")
+inoremap <expr> <f28> XTermPasteBegin("")
+vnoremap <expr> <f28> XTermPasteBegin("c")
+cnoremap <f28> <nop>
+cnoremap <f29> <nop>
