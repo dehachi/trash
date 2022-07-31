@@ -1,6 +1,6 @@
 template <class T>
 vector<T> dijkstra(int s, vector<vector<pair<int,T>>> &g) {
-	vector<int> dis(g.size(), std::numeric_limits<T>::max());
+	vector<int> dis(g.size(), numeric_limits<T>::max());
 	typedef pair<T,int> P;
 	priority_queue<P, vector<P>, greater<P>> pq;
 	dis[s] = 0;
