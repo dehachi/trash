@@ -1,27 +1,16 @@
-[memory]
-command=~/.config/i3blocks/memory
+[ram]
+label=RAM
+command=~/.config/i3blocks/ram
 interval=1
 
 [cpu]
+label=CPU
 command=~/.config/i3blocks/cpu
 interval=1
 
-[wi-fi]
-command=~/.config/i3blocks/wifi
-interval=1
-
-[lightness]
-label=brightness: 
-command=xbacklight -get | xargs printf '%.0f%%\n'
-interval=1
-
 [volume]
-label=volume: 
+label=Vol
 command=pactl list sinks | grep Volume | grep -o '[0-9]*%' | head -1
-interval=1
-
-[battery]
-command=~/.config/i3blocks/battery
 interval=1
 
 [date]
