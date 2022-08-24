@@ -44,12 +44,9 @@ struct SCC {
 		copy(_g);
 		build();
 	}
-	bool same(int u, int v) {
-		return comp[u] == comp[v];
-	}
-	int size() {
-		return fsize;
-	}
+	int get(int x) {return comp[x];}
+	bool same(int u, int v) {return comp[u] == comp[v];}
+	int size() {return fsize;}
 	vector<int> &operator[](int x) {return scc[x];}
 	vector<vector<int>>::iterator begin() {return scc.begin();}
 	vector<vector<int>>::iterator end() {return scc.end();}
