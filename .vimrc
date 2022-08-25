@@ -3,7 +3,6 @@ set nobackup
 set nowritebackup
 set noswapfile
 set clipboard+=unnamed
-syntax on
 set number
 set nowrap
 set statusline=%f%r%h%w%m%=%{&fileformat}\ %{&fileencoding}\ [%l,%c]
@@ -15,26 +14,25 @@ autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,def,cla
 autocmd FileType cpp setl cindent
 autocmd FileType c setl cindent
 set wrapscan
-set hlsearch
 set incsearch
-let loaded_matchparen=1
 nnoremap <ESC><ESC> :noh<CR>
-if has('vim_starting')
-	let &t_SI.="\e[6 q"
-	let &t_EI.="\e[2 q"
-endif
 inoremap ( ()<Left>
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
 inoremap [ []<Left>
 inoremap " ""<Left>
 inoremap ' ''<Left>
-colorscheme peachpuff
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 set whichwrap=b,s,h,l,<,>,[,],~
 if has('persistent_undo')
 	set undodir=~/.vim/undo
 	set undofile      
+endif
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif""""")""'")""'")
+syntax on
+colorscheme peachpuff
+if has('vim_starting')
+	let &t_SI.="\e[6 q"
+	let &t_EI.="\e[2 q"
 endif
 let g:loaded_bracketed_paste=1
 let &t_ti.="\<Esc>[?2004h"
@@ -51,3 +49,10 @@ inoremap <expr> <f28> XTermPasteBegin("")
 vnoremap <expr> <f28> XTermPasteBegin("c")
 cnoremap <f28> <nop>
 cnoremap <f29> <nop>
+set scrolloff=20
+set list
+set listchars=tab:\|\ 
+set completeopt=menuone,noinsert
+inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
+inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
+inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
