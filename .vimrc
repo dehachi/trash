@@ -27,7 +27,7 @@ if has('persistent_undo')
 	set undodir=~/.vim/undo
 	set undofile      
 endif
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif""""")""'")""'")
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 syntax on
 colorscheme peachpuff
 if has('vim_starting')
