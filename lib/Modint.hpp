@@ -1,4 +1,4 @@
-template <int MOD>
+template <unsigned int MOD>
 struct Modint {
 	unsigned int x;
 	constexpr Modint(): x(0) {}
@@ -65,7 +65,7 @@ struct Modint {
 	friend constexpr Modint operator==(const Modint &l, const Modint &r) {return l.x==r.x;}
 	friend constexpr Modint operator!=(const Modint &l, const Modint &r) {return l.x!=r.x;}
 	friend constexpr istream &operator>>(istream &is, Modint &y) {
-		ll z;
+		long long z;
 		y = (is>>z, z);
 		return is;
 	}
