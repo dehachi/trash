@@ -21,4 +21,5 @@ struct SegmentTree {
 		}
 		return f(res_l, res_r);
 	}
+	T operator[](const int &i) const {return dat[i+n];}
 };
