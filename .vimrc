@@ -56,3 +56,11 @@ set completeopt=menuone,noinsert
 inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
 inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
 inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
+function! Rep(...) abort
+	if a:0 == 2
+		execute "%s/\\<"..a:1.."\\>".."/"..a:2.."/g"
+	elseif a:0 == 1
+		execute "%s/\\<"..a:1.."\\>".."//g"
+	end
+endfunction
+command! -nargs=+ Rep call Rep(<f-args>)
