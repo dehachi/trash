@@ -99,9 +99,6 @@ if !exists("cpp_no_cpp20")
   syn keyword cppModule		import module export
 endif
 
-" std
-syn keyword cppType		array vector deque list forward_list set map multiset multimap unordered_map unordered_set unordered_multiset unordered_multimap priority_queue queue stack iterator string bitset
-
 " The minimum and maximum operators in GNU C++
 syn match cppMinMax "[<>]?"
 
