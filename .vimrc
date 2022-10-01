@@ -56,11 +56,20 @@ set completeopt=menuone,noinsert
 inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
 inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
 inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
-function! Rep(...) abort
+function! Replace(...) abort
 	if a:0 == 2
 		execute "%s/\\<"..a:1.."\\>".."/"..a:2.."/g"
 	elseif a:0 == 1
-		execute "%s/\\<"..a:1.."\\>".."//g"
+		execute "%s/\\<"..a:1.."\\>//g"
 	end
 endfunction
-command! -nargs=+ Rep call Rep(<f-args>)
+command! -nargs=+ Replace call Replace(<f-args>)
+function! Reset()
+	let e = expand("%:e")
+	if e == "cpp"
+		call feedkeys(":%d\<CR>\<s-V>:!cat ~/Programs/procon/tmp.cpp\<CR>")
+	elseif e == "py"
+		call feedkeys(":%d\<CR>\<s-V>:!cat ~/Programs/procon/tmp.py\<CR>")
+	end
+endfunction
+command! Reset call Reset()
