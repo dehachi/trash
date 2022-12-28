@@ -2,10 +2,9 @@ template <typename T>
 struct SegmentTree {
 	int n, size;
 	vector<T> dat;
-	using F = function<T(T,T)>;
 	T e;
-	F f;
-	SegmentTree(int _n, T _e, F _f): n(_n), e(_e), f(_f) {
+	function<T(T,T)> f;
+	SegmentTree(int _n, T _e, function<T(T,T)> _f): n(_n), e(_e), f(_f) {
 		size = 1;
 		while (size < _n) size <<= 1;
 		dat.assign(size<<1, e);
@@ -25,4 +24,4 @@ struct SegmentTree {
 		return f(res_l, res_r);
 	}
 	T &operator[](int i) {return dat[i+size];}
-};
+}
