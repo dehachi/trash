@@ -1,3 +1,8 @@
+#pragma GCC optimize("O3")
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
 template <unsigned int MOD>
 struct Modint {
 	unsigned int x;
@@ -5,9 +10,9 @@ struct Modint {
 	template <typename T>
 	constexpr Modint(T _x) noexcept : x((_x%=MOD)<0 ? _x+MOD : _x) {}
 	constexpr Modint inv() const noexcept {
-		ll a = x, b = MOD, u = 1, v = 0;
+		unsigned int a = x, b = MOD, u = 1, v = 0;
 		while (b) {
-			ll t = a / b;
+			unsigned int t = a / b;
 			a -= t * b;
 			swap(a, b);
 			u -= t * v;
@@ -15,7 +20,7 @@ struct Modint {
 		}
 		return Modint(u);
 	}
-	constexpr Modint pow(ll n) const noexcept {
+	constexpr Modint pow(long long n) const noexcept {
 		Modint res = 1, a = *this;
 		while (n > 0) {
 			if (n&1) res *= a;
