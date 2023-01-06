@@ -20,15 +20,6 @@ struct Modint {
 		}
 		return Modint(u);
 	}
-	constexpr Modint pow(long long n) const noexcept {
-		Modint res = 1, a = *this;
-		while (n > 0) {
-			if (n&1) res *= a;
-			a *= a;
-			n >>= 1;
-		}
-		return res;
-	}
 	constexpr Modint operator+() const noexcept {return *this;}
 	constexpr Modint operator-() const noexcept {return Modint()-*this;}
 	constexpr Modint &operator++() noexcept {
