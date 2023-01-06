@@ -1,4 +1,4 @@
-template <typename T>
+template <class T>
 T fast_pow(T x, ll n) {
 	T res = 1;
 	while (n) {
