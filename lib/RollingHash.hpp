@@ -22,6 +22,11 @@ struct RollingHash {
 		ull res = hash[r]-mul(hash[l], power[r-l])+mod;
 		return res>=mod ? res-mod : res;
 	}
+	ull connect(RollingHash &rh2, int l, int r, int l2, int r2) {
+		ull h = get(l, r), h2 = rh2.get(l2, r2);
+		ull res = mul(h, power[r2-l2])+h2;
+		return res>=mod ? res-mod : res;
+	}
 	int lcp(RollingHash &rh2, int l, int r, int l2, int r2) {
 		int left = -1, right = min(r-l, r2-l2)+1;
 		while (right-left > 1) {
