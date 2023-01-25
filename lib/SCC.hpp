@@ -32,10 +32,6 @@ struct SCC {
 			rdfs(vs[i], fsize++);
 		}
 	}
-	void build(vector<vector<int>> &_g) {
-		copy(_g);
-		build();
-	}
 	int get(int x) {return comp[x];}
 	bool same(int u, int v) {return comp[u] == comp[v];}
 	int size() {return fsize;}
