@@ -4,14 +4,6 @@ struct SCC {
 	vector<int> vs, comp;
 	vector<bool> used;
 	SCC(int _n): n(_n), g(_n), rg(_n), comp(_n, -1), used(_n) {}
-	void copy(vector<vector<int>> &_g) {
-		for (int i=0; i<n; i++) {
-			for (int j: _g[i]) {
-				g[i].push_back(j);
-				rg[j].push_back(i);
-			}
-		}
-	}
 	void add_edge(int u, int v) {
 		g[u].push_back(v);
 		rg[v].push_back(u);
