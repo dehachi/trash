@@ -3,6 +3,7 @@ struct CRT {
 	T rem, mod;
 	CRT(): rem(0), mod(1) {}
 	void add(T r, T m) {
+		if (m == 0) return;
 		auto ext_gcd = [](T a, T b, T &x, T &y, T &d) -> void {
 			x = 1, y = 0;
 			T u = 0, v = 1;
