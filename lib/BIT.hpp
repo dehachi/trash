@@ -2,6 +2,7 @@ template<typename T>
 struct BIT {
 	int n;
 	vector<T> bit;
+	BIT(): n(0) {}
 	BIT(int _n): n(_n), bit(_n+1) {}
 	void add(int i, T x) {
 		i++;
