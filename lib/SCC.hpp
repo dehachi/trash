@@ -5,22 +5,22 @@ struct SCC {
 	vector<bool> used;
 	SCC(int _n): n(_n), g(_n), rg(_n), comp(_n, -1), used(_n) {}
 	void add_edge(int u, int v) {
-		g[u].push_back(v);
-		rg[v].push_back(u);
+		g[u].emplace_back(v);
+		rg[v].emplace_back(u);
 	}
 	void dfs(int pos) {
 		used[pos] = true;
 		for (int &to: g[pos]) if (!used[to]) {
 			dfs(to);
 		}
-		vs.push_back(pos);
+		vs.emplace_back(pos);
 	}
 	void rdfs(int pos, int k) {
 		comp[pos] = k;
 		for (int &to: rg[pos]) if (comp[to] == -1) {
 			rdfs(to, k);
 		}
-		scc[k].push_back(pos);
+		scc[k].emplace_back(pos);
 	}
 	void build() {
 		for (int i=0; i<n; i++) if (!used[i]) {
@@ -28,7 +28,7 @@ struct SCC {
 		}
 		fsize = 0;
 		for (int i=n-1; i>=0; i--) if (comp[vs[i]] == -1) {
-			scc.push_back({});
+			scc.emplace_back();
 			rdfs(vs[i], fsize++);
 		}
 	}
