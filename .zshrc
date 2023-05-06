@@ -1,5 +1,5 @@
-PROMPT='%F{green}%n@%m%f%F{blue}:%~%f$ '
+PROMPT='%F{green}%n@%m%f%F{blue}:%~%f
+%% '
 alias clip='xclip -selection c'
-alias g++='g++ -std=gnu++17 -I ~/Programs/include/ -o a'
+alias g++='g++ -std=gnu++17 -O2 -I ~/Programs/include/ -o a'
 alias py='python3'
-alias pypy='pypy3'
