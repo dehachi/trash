@@ -1,8 +1,11 @@
 from itertools import *
-from collections import *
 from math import *
-from heapq import *
-from bisect import *
+
+def sp():return input()
+def ip():return int(input())
+def mp():return map(int,input().split())
+def msp():return input()
+def lp():return list(map(int,input().split()))
 
 def main():
 	return
