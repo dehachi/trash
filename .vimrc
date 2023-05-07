@@ -67,9 +67,9 @@ command! -nargs=+ Replace call Replace(<f-args>)
 function! Reset()
 	let e = expand("%:e")
 	if e == "cpp"
-		call feedkeys(":%d\<CR>\<s-V>:!cat ~/Programs/procon/tmp.cpp\<CR>")
+		call feedkeys(":%d\<CR>\<s-V>:!cat ~/Programs/procon/tmp/tmp.cpp\<CR>G")
 	elseif e == "py"
-		call feedkeys(":%d\<CR>\<s-V>:!cat ~/Programs/procon/tmp.py\<CR>")
+		call feedkeys(":%d\<CR>\<s-V>:!cat ~/Programs/procon/tmp/tmp.py\<CR>:10\<CR>$")
 	end
 endfunction
 command! Reset call Reset()
